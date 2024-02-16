@@ -63,7 +63,38 @@ void Unit::newTurn(){
 	guard_on = false;
 }
 
+bool Unit::isDead(){
+    if(hp<=0) return true;
+    else return false;
+}
 
+void Unit::guard(){
+    guard_on = true;
+}
+
+int Unit::beAttacked(int oppatk){
+    int dam;
+    if(guard_on == false) dam = oppatk - def;
+    else dam = (oppatk - def)/3;
+    hp -= dam;
+    return dam;
+}
+
+int Unit::attack(Unit &opp){
+	return opp.beAttacked(atk);
+}
+
+int Unit::heal(){
+int healhp = rand()%21+10;
+if(healhp+hp>hpmax) {
+healhp = hpmax - hp;
+}
+if(hp==hpmax){
+healhp = 0;
+}
+hp += healhp;
+return healhp;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////
 //Write function members isDead(), guard(), heal(), beAttacked(), and attack() here//
